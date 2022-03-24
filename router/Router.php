@@ -27,7 +27,10 @@ class Router
 
     public function run()
     {
-        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+        if (isset($_SERVER['REQUEST_METHOD']) && !empty($_SERVER['REQUEST_METHOD'])) {
+            $requestMethod = $requestMethod = $_SERVER['REQUEST_METHOD'];
+        }
+        foreach ($this->routes[$requestMethod] as $route) {
             if ($route->matches($this->url)) {
                 return $route->execute();
             }
